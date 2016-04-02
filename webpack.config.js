@@ -61,7 +61,7 @@ module.exports = {
       cached: false,
       exclude: [],
     },
-    host: "localhost.com",
+    host: "localhost",
     port: 8080,
   },
   watchOptions: {

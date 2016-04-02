@@ -3,28 +3,31 @@ import * as ReactDOM from 'react-dom';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-class Model {
-  @observable count = 0
-}
-
 @observer
-class MyComponent extends React.Component<{model: Model}, {}> {
+export class AsyncButton extends React.Component<void, {}> {
+    @observable
+    private isLoading: boolean = false;
 
-  constructor() {
-    super();
-  }
+    constructor() {
+        super();
+        console.log('constructor')
+    }
 
-  render () {
-    return (
-      <div>
-        <h1>Count: {this.props.model.count}</h1>
-        <button onClick={() => this.props.model.count++}>Increment</button>
-      </div>
-    );
-  }
+    render () {
+        console.log('render', this.isLoading);
+
+        return (
+            <button
+                onClick={() => this.isLoading = !this.isLoading}>
+                {this.isLoading ? <span>Loading</span> : <span>Click me</span>}
+            </button>
+        );
+    }
 }
 
 ReactDOM.render(
-  <MyComponent model={new Model()} />,
-  document.getElementById('root')
-);
+    <div>
+        <AsyncButton/>
+        <AsyncButton/>
+    </div>,
+    document.getElementById('root'));
