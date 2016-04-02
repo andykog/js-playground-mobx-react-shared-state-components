@@ -1,0 +1,16 @@
+root = false
+
+[*]
+indent_style = space
+end_of_line = lf
+trim_trailing_whitespace = true
+
+[*.{js, jsx, ts, tsx}]
+indent_size = 2
+insert_final_newline = true
+max_line_length = 100
+
+[*.md]
+indent_size = 4
+trim_trailing_whitespace = false
+max_line_length = 0
