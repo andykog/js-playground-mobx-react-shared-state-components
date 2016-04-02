@@ -1,7 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var NODE_ENV = process.env.NODE_ENV;
-var nodeModulesPath = path.join(__dirname, 'node_modules');
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
@@ -41,18 +40,11 @@ module.exports = {
     root: path.resolve(__dirname, 'src'),
     modulesDirectories: ['node_modules'],
     extensions: ['', '.js', '.jsx', '.ts', '.tsx'],
-    alias: {
-      'react': path.join(nodeModulesPath, 'react', 'react.js'),
-      'react-dom': path.join(nodeModulesPath, 'react-dom', 'dist', 'react-dom.js'),
-      'flux': path.join(nodeModulesPath, 'flux', 'index.js'),
-      'babel-polyfill': path.join(nodeModulesPath, 'babel-polyfill', 'lib', 'index.js'),
-    }
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(NODE_ENV) },
     }),
-    new webpack.ProvidePlugin({}),
   ],
   devServer: {
     contentBase: './',
@@ -61,21 +53,8 @@ module.exports = {
       cached: false,
       exclude: [],
     },
-    host: "localhost",
-    port: 8080,
   },
   watchOptions: {
     poll: true,
   },
 };
-
-if (NODE_ENV === 'production') {
-  module.exports.plugins = module.exports.plugins.concat([
-    new ExtractTextPlugin('[name].bundle.css'),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: true,
-    }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.NoErrorsPlugin(),
-  ]);
-}
