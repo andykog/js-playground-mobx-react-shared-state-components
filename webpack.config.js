@@ -1,7 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var NODE_ENV = process.env.NODE_ENV;
-
+var nodeModulesPath = path.join(__dirname, 'node_modules');
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
@@ -21,9 +21,9 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
-        exclude: /(node_modules)/,
-        loader: 'babel?cacheDirectory',
+       test: /\.jsx?$/,
+       exclude: /(node_modules)/,
+       loader: 'babel?cacheDirectory',
       },
       {
         test: /\.tsx?$/,
@@ -40,7 +40,13 @@ module.exports = {
   resolve: {
     root: path.resolve(__dirname, 'src'),
     modulesDirectories: ['node_modules'],
-    extensions: ['', '.js', '.jsx', '.ts'],
+    extensions: ['', '.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      'react': path.join(nodeModulesPath, 'react', 'react.js'),
+      'react-dom': path.join(nodeModulesPath, 'react-dom', 'dist', 'react-dom.js'),
+      'flux': path.join(nodeModulesPath, 'flux', 'index.js'),
+      'babel-polyfill': path.join(nodeModulesPath, 'babel-polyfill', 'lib', 'index.js'),
+    }
   },
   plugins: [
     new webpack.DefinePlugin({
